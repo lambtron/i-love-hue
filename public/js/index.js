@@ -4,32 +4,56 @@
  */
 
 /**
- * 'Collision detection' is if the colors and filters match.
+ * Static variables.
  */
 
-/**
- * `Obstacle` factory.
- */
+var loader;
+var gameCanvas;
+var stage, renderer;
+var gameWidth, gameHeight;
+var background_texture, background, background_sprite;
+var mainContainer;
+
+// Score
+var level = 1;
+var start_time = moment();
+var timer = 0; // measured in seconds
+
+// Text
+var text;
+
+// Obstacles
+var obstaclesArray = [];
+
+// Sound
+
 
 /**
- * `Obstacle` object.
- *
- * @property {Array} filters i.e. ['1', '2', ... , '3']
- * @property {Object} shape
- * @property {Function} draw
+ * Initialize game.
  */
 
-/**
- * `Filter` factory.
- */
+function init() {
+  var assetsToLoad = [];
+  loader = new PIXI.AssetLoader(assetsToLoad);
+  loader.onComplete = setup.bind(this);
+  loader.load();
+}
 
 /**
- * `Filter` object.
- *
- * @property {Integer} id
- * @property {Function} draw
+ * Setup.
  */
 
+function setup() {
+  gameCanvas = document.getElementById('myCanvas');
+  gameWidth = window.innerWidth;
+  gameHeight = window.innerHeight;
+  stage = new PIXI.Stage(0x000000);
+  renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight, gameCanvas);
+}
+
 /**
- * Obstacle queue.
+ * Draw.
  */
+
+function draw() {
+}
