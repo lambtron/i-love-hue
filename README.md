@@ -1,4 +1,4 @@
-ldjam-ilovehue
+I :heart: Hue
 ==============
 
-LDJAM #31 entry, "I &lt;3 Hue".
+[LDJAM #31](http://ludumdare.com/compo/) entry, "I :heart: Hue".
