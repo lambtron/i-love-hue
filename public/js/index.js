@@ -4,6 +4,13 @@
  */
 
 /**
+ * Module dependencies.
+ */
+
+var Obstacle = require('./obstacles/index');
+var Screen = require('./screens/index');
+
+/**
  * Static variables.
  */
 
@@ -24,6 +31,9 @@ var text;
 
 // Obstacles
 var obstaclesArray = [];
+
+// Screens
+var screensArray = [];
 
 // Sound
 
@@ -49,6 +59,15 @@ function setup() {
   gameHeight = window.innerHeight;
   stage = new PIXI.Stage(0x000000);
   renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight, gameCanvas);
+
+}
+
+/**
+ * Progress to next level.
+ */
+
+function nextLevel() {
+  // var obstacle = new Obstacle();
 }
 
 /**
@@ -56,4 +75,6 @@ function setup() {
  */
 
 function draw() {
+
+  // Check collisions, aka screens match.
 }
