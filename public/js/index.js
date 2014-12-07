@@ -29,6 +29,7 @@ var screensContainer;
 
 // Sound
 
+init();
 setup();
 draw();
 
@@ -48,9 +49,9 @@ function init() {
  */
 
 function setupPlayer() {
-  var player = new PIXI.Text('#', { font: '50px', fill: 'black' });
-  player.position.y = 30;
-  player.position.x = 40;
+  var player = new PIXI.Text('#', { font: '30px ariel', fill: 'white' });
+  player.position.y = 40;
+  player.position.x = gameWidth / 2 - 10;
   return player;
 }
 
@@ -77,8 +78,8 @@ function setupScreens(colors) {
 
 function setup() {
   gameCanvas = document.getElementById('myCanvas');
-  gameWidth = window.innerWidth;
-  gameHeight = window.innerHeight;
+  gameWidth = gameCanvas.width;
+  gameHeight = gameCanvas.height;
   stage = new PIXI.Stage(0x000000);
   renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight, gameCanvas);
   obstaclesContainer = new PIXI.DisplayObjectContainer();
@@ -114,15 +115,19 @@ function draw() {
 
   // Add stuff to obstacles container
   // Add stuff to screens container
-  // Listen when key down movements.
+  // Listen when key down movements.2
   var randomOccurance = Math.round(Math.random() * 100);
   if (randomOccurance < 1) {
-    var randomObstacle = Math.round(Math.random() * (gameWidth));
-    var obstacle = new Obstacle([0xFFFF00], gameWidth, 20); // needs to be one of the colors
+    var obstacle = new Obstacle(['0xFF0000'], gameWidth, obstaclesContainer); // needs to be one of the colors
     obstaclesArray.push(obstacle);
   }
   for (var i = 0; i < obstaclesArray.length; i++) {
-    obstaclesArray[i].update();
+    var obstacle = obstaclesArray[i];
+    obstacle.update();
+    if (obstacle.getY() < (-gameHeight - obstacle.getHeight())) {
+      obstaclesContainer.removeChild(obstaclesArray[i].path);
+      obstaclesArray.splice(i, 1);
+    }
   }
   detectCollisions();
   renderer.render(stage);

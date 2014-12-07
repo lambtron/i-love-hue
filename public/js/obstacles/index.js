@@ -3,17 +3,17 @@
  * `Obstacle` factory. Create an obstacle.
  */
 
-function Obstacle(screens, width, height) {
-  if (!(this instanceof Obstacle)) return new Obstacle(screens, path);
+function Obstacle(screens, width, container) {
+  // if (!(this instanceof Obstacle)) return new Obstacle(screens, width, container);
+  var height = Math.round(Math.random() * 15) + 5;
   this.screens = screens || []; // Array of screen objects.
   this.path = new PIXI.Graphics();
   this.path.position.height = height;
   this.path.position.y = 0;
-
-  // this.path.beginFill(screens[0].pattern);
-  this.path.beginFill(0xFFFF00);
-  this.path.drawRect(0, 0, width, height);
+  this.path.beginFill(screens[0]);
+  this.path.drawRect(0, 170, width, height);
   this.path.endFill();
+  container.addChild(this.path);
 }
 
 /**
@@ -22,6 +22,14 @@ function Obstacle(screens, width, height) {
 
 Obstacle.prototype.getY = function getY() {
   return this.path.position.y;
+};
+
+/**
+ * Get height.
+ */
+
+Obstacle.prototype.getHeight = function getHeight() {
+  return this.path.height;
 };
 
 /**
@@ -38,12 +46,4 @@ Obstacle.prototype.update = function update() {
 
 Obstacle.prototype.remove = function remove() {
 
-};
-
-/**
- * Add object to stage.
- */
-
-Obstacle.prototype.add = function add(stage) {
-  stage.addChild(this.path);
 };
