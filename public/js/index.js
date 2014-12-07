@@ -4,13 +4,6 @@
  */
 
 /**
- * Module dependencies.
- */
-
-var Obstacle = require('./obstacles/index');
-var Screen = require('./screens/index');
-
-/**
  * Static variables.
  */
 
@@ -18,22 +11,21 @@ var loader;
 var gameCanvas;
 var stage, renderer;
 var gameWidth, gameHeight;
-var background_texture, background, background_sprite;
 var mainContainer;
 
 // Score
 var level = 1;
-var start_time = moment();
-var timer = 0; // measured in seconds
 
 // Text
 var text;
 
 // Obstacles
 var obstaclesArray = [];
+var obstaclesContainer;
 
 // Screens
 var screensArray = [];
+var screensContainer;
 
 // Sound
 
@@ -59,7 +51,13 @@ function setup() {
   gameHeight = window.innerHeight;
   stage = new PIXI.Stage(0x000000);
   renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight, gameCanvas);
-
+  mainContainer = new PIXI.DisplayObjectContainer();
+  stage.addChild(mainContainer);
+  obstaclesContainer = new PIXI.DisplayObjectContainer();
+  mainContainer.addChild(obstaclesContainer);
+  screensContainer = new PIXI.DisplayObjectContainer();
+  mainContainer.addChild(screensContainer);
+  draw();
 }
 
 /**

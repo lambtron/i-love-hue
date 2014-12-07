@@ -10,9 +10,3 @@ function Screen(id, difficulty) {
   // Randomly generated based on `difficulty`.
   this.pattern = '#FFFFFF';
 }
-
-/**
- * Expose `Screen`.
- */
-
-module.exports = Screen;

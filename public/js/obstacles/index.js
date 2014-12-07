@@ -46,9 +46,3 @@ Obstacle.prototype.remove = function remove() {
 Obstacle.prototype.add = function add(stage) {
   stage.addChild(this.path);
 };
-
-/**
- * Expose `Obstacle`.
- */
-
-module.exports = Obstacle;
