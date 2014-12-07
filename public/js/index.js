@@ -29,6 +29,8 @@ var screensContainer;
 
 // Sound
 
+setup();
+draw();
 
 /**
  * Initialize game.
@@ -42,6 +44,34 @@ function init() {
 }
 
 /**
+ * Setup player.
+ */
+
+function setupPlayer() {
+  var player = new PIXI.Text('#', { font: '50px', fill: 'black' });
+  player.position.y = 30;
+  player.position.x = 40;
+  return player;
+}
+
+/**
+ * Setup screens.
+ *
+ * @param {Array} colors
+ */
+
+function setupScreens(colors) {
+  var screenGraphics = [];
+  for (var i = 0; i < colors.length; i++) {
+    var screenGraphic = new PIXI.Graphics();
+    screenGraphic.beginFill(colors[i]);
+    screenGraphic.drawRect(0, 0, gameWidth, gameHeight);
+    screenGraphics.push(screenGraphic);
+  }
+  return screenGraphics;
+}
+
+/**
  * Setup.
  */
 
@@ -51,13 +81,14 @@ function setup() {
   gameHeight = window.innerHeight;
   stage = new PIXI.Stage(0x000000);
   renderer = PIXI.autoDetectRenderer(gameWidth, gameHeight, gameCanvas);
-  mainContainer = new PIXI.DisplayObjectContainer();
-  stage.addChild(mainContainer);
   obstaclesContainer = new PIXI.DisplayObjectContainer();
-  mainContainer.addChild(obstaclesContainer);
   screensContainer = new PIXI.DisplayObjectContainer();
-  mainContainer.addChild(screensContainer);
-  draw();
+  mainContainer = new PIXI.DisplayObjectContainer();
+  var screenGraphics = setupScreens(['#FFFFFF']);
+  screensContainer.addChild(screenGraphics[0]);
+  mainContainer.addChild(obstaclesContainer);
+  mainContainer.addChild(setupPlayer());
+  stage.addChild(mainContainer);
 }
 
 /**
@@ -68,4 +99,10 @@ function draw() {
   // Move all obstacles up.
   // Check collisions, aka screens match.
   // - if collision, then show some juice.
+
+  // Add stuff to obstacles container
+  // Add stuff to screens container
+
+  renderer.render(stage);
+  requestAnimationFrame(draw);
 }

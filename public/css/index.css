@@ -1,13 +1,13 @@
-@font-face {
+/*@font-face {
   font-family: 'PressStart2p';
   src: url('/public/pressstart.ttf');
 }
-
+*/
 html, body {
   background: white;
   color: black;
   height: 100%;
-  font-family: 'PressStart2p';
+  /*font-family: 'PressStart2p';*/
   margin: 0px;
   padding: 0px;
   width: 100%;
