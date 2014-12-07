@@ -19,6 +19,12 @@ var level = 1;
 // Text
 var text;
 
+// Player
+var playerSettings = {
+  y: 40
+  // Add more stuff here, like texture and assets.
+}
+
 // Obstacles
 var obstaclesArray = [];
 var obstaclesContainer;
@@ -50,7 +56,7 @@ function init() {
 
 function setupPlayer() {
   var player = new PIXI.Text('#', { font: '30px ariel', fill: 'white' });
-  player.position.y = 40;
+  player.position.y = playerSettings.y;
   player.position.x = gameWidth / 2 - 10;
   return player;
 }
@@ -99,9 +105,21 @@ function setup() {
  */
 
 function detectCollisions() {
-  // Go through all obstacles, go through current filter
-  // if any exist, .remove(obstacle)
-  //
+  for (var i = 0; i < obstaclesArray.length; i++) {
+    var obstacle = obstaclesArray[i];
+    obstacle.update();
+    var y = obstacle.getY();
+    // Obstacle reaches top of screen.
+    if (y < (-gameHeight - obstacle.getHeight())) {
+      obstaclesContainer.removeChild(obstacle.path);
+      obstaclesArray.splice(i, 1);
+    }
+
+    // Obstacle hits player.
+
+
+    // Screen equals obstacle.
+  }
 }
 
 /**
@@ -121,15 +139,17 @@ function draw() {
     var obstacle = new Obstacle(['0xFF0000'], gameWidth, obstaclesContainer); // needs to be one of the colors
     obstaclesArray.push(obstacle);
   }
-  for (var i = 0; i < obstaclesArray.length; i++) {
-    var obstacle = obstaclesArray[i];
-    obstacle.update();
-    if (obstacle.getY() < (-gameHeight - obstacle.getHeight())) {
-      obstaclesContainer.removeChild(obstaclesArray[i].path);
-      obstaclesArray.splice(i, 1);
-    }
-  }
   detectCollisions();
   renderer.render(stage);
   requestAnimationFrame(draw);
 }
+
+/**
+ * Game over.
+ */
+
+
+/**
+ * Next level!
+ */
+

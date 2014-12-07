@@ -10,6 +10,7 @@ function Obstacle(screens, width, container) {
   this.path = new PIXI.Graphics();
   this.path.position.height = height;
   this.path.position.y = 0;
+  this.path.blendMode = PIXI.blendModes.ADD;
   this.path.beginFill(screens[0]);
   this.path.drawRect(0, 170, width, height);
   this.path.endFill();
@@ -37,13 +38,5 @@ Obstacle.prototype.getHeight = function getHeight() {
  */
 
 Obstacle.prototype.update = function update() {
-  this.path.position.y -= 1;
-};
-
-/**
- * Self-destruct and garbage collect.
- */
-
-Obstacle.prototype.remove = function remove() {
-
+  this.path.position.y -= 0.2;
 };
