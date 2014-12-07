@@ -84,11 +84,23 @@ function setup() {
   obstaclesContainer = new PIXI.DisplayObjectContainer();
   screensContainer = new PIXI.DisplayObjectContainer();
   mainContainer = new PIXI.DisplayObjectContainer();
-  var screenGraphics = setupScreens(['#FFFFFF']);
+  var screenGraphics = setupScreens([0x0000FF]);
   screensContainer.addChild(screenGraphics[0]);
+  mainContainer.addChild(screensContainer);
   mainContainer.addChild(obstaclesContainer);
-  mainContainer.addChild(setupPlayer());
+  var player = setupPlayer();
+  mainContainer.addChild(player);
   stage.addChild(mainContainer);
+}
+
+/**
+ * Detect collisions.
+ */
+
+function detectCollisions() {
+  // Go through all obstacles, go through current filter
+  // if any exist, .remove(obstacle)
+  //
 }
 
 /**
@@ -102,7 +114,17 @@ function draw() {
 
   // Add stuff to obstacles container
   // Add stuff to screens container
-
+  // Listen when key down movements.
+  var randomOccurance = Math.round(Math.random() * 100);
+  if (randomOccurance < 1) {
+    var randomObstacle = Math.round(Math.random() * (gameWidth));
+    var obstacle = new Obstacle([0xFFFF00], gameWidth, 20); // needs to be one of the colors
+    obstaclesArray.push(obstacle);
+  }
+  for (var i = 0; i < obstaclesArray.length; i++) {
+    obstaclesArray[i].update();
+  }
+  detectCollisions();
   renderer.render(stage);
   requestAnimationFrame(draw);
 }

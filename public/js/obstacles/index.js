@@ -10,7 +10,8 @@ function Obstacle(screens, width, height) {
   this.path.position.height = height;
   this.path.position.y = 0;
 
-  this.path.beginFill(screens[0].pattern);
+  // this.path.beginFill(screens[0].pattern);
+  this.path.beginFill(0xFFFF00);
   this.path.drawRect(0, 0, width, height);
   this.path.endFill();
 }
