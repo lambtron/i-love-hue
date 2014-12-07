@@ -63,18 +63,11 @@ function setup() {
 }
 
 /**
- * Progress to next level.
- */
-
-function nextLevel() {
-  // var obstacle = new Obstacle();
-}
-
-/**
  * Draw.
  */
 
 function draw() {
-
+  // Move all obstacles up.
   // Check collisions, aka screens match.
+  // - if collision, then show some juice.
 }

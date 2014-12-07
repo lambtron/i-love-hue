@@ -3,22 +3,40 @@
  * `Obstacle` factory. Create an obstacle.
  */
 
-function Obstacle(screens, path) {
+function Obstacle(screens, width, height) {
   if (!(this instanceof Obstacle)) return new Obstacle(screens, path);
   this.screens = screens || []; // Array of screen objects.
   this.path = new PIXI.Graphics();
-  // this.path.beginFill(this.screens[i]);
-  // this.path.moveTo(0,0);
-  // this.path.lineTo(50,100);
-  // this.path.endFill();
+  this.path.position.height = height;
+  this.path.position.y = 0;
+
+  this.path.beginFill(screens[0].pattern);
+  this.path.drawRect(0, 0, width, height);
+  this.path.endFill();
 }
 
 /**
- * Draw.
+ * Get Y position.
  */
 
-Obstacle.prototype.draw = function draw() {
-  // Draw path but with screens.
+Obstacle.prototype.getY = function getY() {
+  return this.path.position.y;
+};
+
+/**
+ * Update and draw.
+ */
+
+Obstacle.prototype.update = function update() {
+  this.path.position.y -= 1;
+};
+
+/**
+ * Self-destruct and garbage collect.
+ */
+
+Obstacle.prototype.remove = function remove() {
+
 };
 
 /**
@@ -27,7 +45,7 @@ Obstacle.prototype.draw = function draw() {
 
 Obstacle.prototype.add = function add(stage) {
   stage.addChild(this.path);
-}
+};
 
 /**
  * Expose `Obstacle`.
