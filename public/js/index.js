@@ -57,7 +57,6 @@ function init() {
 function setupPlayer() {
   var playerTexture = PIXI.Texture.fromImage('public/assets/img/player.png');
   var player = new PIXI.Sprite(playerTexture);
-  // var player = new PIXI.Text('#', { font: '30px ariel', fill: 'white' });
   player.position.y = playerSettings.y;
   player.position.x = gameWidth / 2 - 10;
   return player;
@@ -70,14 +69,67 @@ function setupPlayer() {
  */
 
 function setupScreens(colors) {
-  var screenGraphics = [];
+  //
+  // Need to create rectangles of various colors
+  // Size all the same: gameWidth, gameHeight
+  // Origin point varies
+  //
+  // 0, 1, 2
+  // 3, 4, 5
+  // 6, 7, 8
+  //  _ _ _
+  // |_|_|_|
+  // |_|_|_|
+  // |_|_|_|
+  //
+  // 0:
+  // -width, -height, width, height
+  //
+  // 1:
+  // 0, -height, width, height
+  //
+  // 2:
+  // width, -height, width, height
+  //
+  // 3:
+  // -width, 0, width, height
+  //
+  // 4:
+  // 0, 0, width, height
+  //
+  // 5:
+  // width, 0, width, height
+  //
+  // 6:
+  // -width, height, width, height
+  //
+  // 7:
+  // 0, height, width, height
+  //
+  // 8:
+  // width, height, width, height
+  //
+  // 1, 3, 5, 7, 0, 2, 6, 8
+  //
+  var w = gameWidth;
+  var h = gameHeight;
+  var screenPosition = [
+    [0, -h, w, h],
+    [-w, 0, w, h],
+    [w, 0, w, h],
+    [0, h, w, h],
+    [-w, -h, w, h],
+    [w, -h, w, h],
+    [-w, h, w, h],
+    [w, h, w, h]
+  ];
+  var screenGraphic = new PIXI.Graphics();
   for (var i = 0; i < colors.length; i++) {
-    var screenGraphic = new PIXI.Graphics();
     screenGraphic.beginFill(colors[i]);
-    screenGraphic.drawRect(0, 0, gameWidth, gameHeight);
-    screenGraphics.push(screenGraphic);
+    screenGraphic.drawRect(screenPosition[i][0], screenPosition[i][1],
+      screenPosition[i][2], screenPosition[i][3]);
   }
-  return screenGraphics;
+  return screenGraphic;
 }
 
 /**
@@ -93,13 +145,15 @@ function setup() {
   obstaclesContainer = new PIXI.DisplayObjectContainer();
   screensContainer = new PIXI.DisplayObjectContainer();
   mainContainer = new PIXI.DisplayObjectContainer();
-  var screenGraphics = setupScreens([0xCCDDFF]);
-  screensContainer.addChild(screenGraphics[0]);
+  mainContainer.setInteractive(true);
+  var screenGraphic = setupScreens([0xCCDDFF, 0x00FFFF, 0xFF00FF]);
+  screensContainer.addChild(screenGraphic);
   mainContainer.addChild(screensContainer);
   mainContainer.addChild(obstaclesContainer);
   var player = setupPlayer();
   mainContainer.addChild(player);
   stage.addChild(mainContainer);
+  mainContainer.mousemove = getMouse;
 }
 
 /**
@@ -122,6 +176,21 @@ function detectCollisions() {
 
     // Screen equals obstacle.
   }
+}
+
+/**
+ * Get input.
+ */
+
+function getMouse(mouseData) {
+  // Need to figure out how to get `x` and `y` from `mouseData`.
+  // Need to calibrate the `x` and `y`.
+  // Move screensContainer
+  var mouse = mouseData.getLocalPosition(mainContainer);
+  var x = mouse.x;
+  var y = mouse.y;
+  screensContainer.position.x = x;
+  screensContainer.position.y = y;
 }
 
 /**
