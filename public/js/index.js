@@ -111,8 +111,8 @@ function setupScreens(colors) {
   //
   // 1, 3, 5, 7, 0, 2, 6, 8
   //
-  var w = gameWidth * 1;
-  var h = gameHeight * 1;
+  var w = gameWidth;
+  var h = gameHeight;
   var screenPosition = [
     [0, -h, w, h],
     [-w, 0, w, h],
@@ -124,10 +124,21 @@ function setupScreens(colors) {
     [w, h, w, h]
   ];
   var screenGraphic = new PIXI.Graphics();
+  screenGraphic.alpha = 0.8;
+  screenGraphic.blendMode = PIXI.blendModes.ADD;
+  screenGraphic.screens = [];
   for (var i = 0; i < colors.length; i++) {
     screenGraphic.beginFill(colors[i]);
     screenGraphic.drawRect(screenPosition[i][0], screenPosition[i][1],
       screenPosition[i][2], screenPosition[i][3]);
+    var screen = {
+      color: colors[i],
+      position: {
+        x: screenPosition[i][0],
+        y: screenPosition[i][1]
+      }
+    };
+    screenGraphic.screens.push(screen);
   }
   return screenGraphic;
 }
@@ -146,7 +157,7 @@ function setup() {
   screensContainer = new PIXI.DisplayObjectContainer();
   mainContainer = new PIXI.DisplayObjectContainer();
   mainContainer.setInteractive(true);
-  var screenGraphic = setupScreens([0xCCDDFF, 0x00FFFF, 0xFF00FF]);
+  var screenGraphic = setupScreens(['0xCCDDFF', '0x00FFFF', '0xFF00FF']);
   screensContainer.addChild(screenGraphic);
   mainContainer.addChild(screensContainer);
   mainContainer.addChild(obstaclesContainer);
@@ -165,6 +176,7 @@ function detectCollisions() {
     var obstacle = obstaclesArray[i];
     obstacle.update();
     var y = obstacle.getY();
+
     // Obstacle reaches top of screen.
     if (y < (-gameHeight - obstacle.getHeight()))
       removeObstacle(i);
@@ -173,6 +185,17 @@ function detectCollisions() {
 
 
     // Screen equals obstacle.
+    var sx = screensContainer.position.x;
+    var sy = screensContainer.position.y;
+    for (var j = 0; j < screensContainer.children.length; j++) {
+      var screen = screensContainer.children[j];
+      if (sx === screen.position.x && sy === screen.position.y) {
+        for (var k = 0; k < obstacle.screens.length; k++) {
+          if (screen.color === obstacle.screens[k])
+            removeObstacle(i);
+        }
+      }
+    }
     // What is the screenContainer position?
     // What is that screen color?
     // For all obstacles that match that screen color, remove.

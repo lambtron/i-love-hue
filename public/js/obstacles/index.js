@@ -12,7 +12,7 @@ function Obstacle(screens, width, container) {
   this.path.position.y = 0;
   this.path.blendMode = PIXI.blendModes.ADD;
   this.path.beginFill(screens[0]);
-  this.path.drawRect(0, 170, width, height);
+  this.path.drawRect(0, 500 + height, width, height);
   this.path.endFill();
   container.addChild(this.path);
 }
