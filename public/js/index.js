@@ -189,6 +189,7 @@ function getMouse(mouseData) {
   var mouse = mouseData.getLocalPosition(mainContainer);
   var x = mouse.x;
   var y = mouse.y;
+  console.log('x: ' + x + ', y: ' + y);
   screensContainer.position.x = x;
   screensContainer.position.y = y;
 }
