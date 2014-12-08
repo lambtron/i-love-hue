@@ -166,16 +166,29 @@ function detectCollisions() {
     obstacle.update();
     var y = obstacle.getY();
     // Obstacle reaches top of screen.
-    if (y < (-gameHeight - obstacle.getHeight())) {
-      obstaclesContainer.removeChild(obstacle.path);
-      obstaclesArray.splice(i, 1);
-    }
+    if (y < (-gameHeight - obstacle.getHeight()))
+      removeObstacle(i);
 
     // Obstacle hits player.
 
 
     // Screen equals obstacle.
+    // What is the screenContainer position?
+    // What is that screen color?
+    // For all obstacles that match that screen color, remove.
+
   }
+}
+
+/**
+ * Remove `obstacle`.
+ *
+ * @param {Integer} i, index in array
+ */
+
+function removeObstacle(i) {
+  obstaclesContainer.removeChild(obstaclesArray[i].path);
+  obstaclesArray.splice(i, 1);
 }
 
 /**
