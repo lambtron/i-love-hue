@@ -111,8 +111,8 @@ function setupScreens(colors) {
   //
   // 1, 3, 5, 7, 0, 2, 6, 8
   //
-  var w = gameWidth;
-  var h = gameHeight;
+  var w = gameWidth * 1;
+  var h = gameHeight * 1;
   var screenPosition = [
     [0, -h, w, h],
     [-w, 0, w, h],
@@ -183,15 +183,9 @@ function detectCollisions() {
  */
 
 function getMouse(mouseData) {
-  // Need to figure out how to get `x` and `y` from `mouseData`.
-  // Need to calibrate the `x` and `y`.
-  // Move screensContainer
   var mouse = mouseData.getLocalPosition(mainContainer);
-  var x = mouse.x;
-  var y = mouse.y;
-  console.log('x: ' + x + ', y: ' + y);
-  screensContainer.position.x = x;
-  screensContainer.position.y = y;
+  screensContainer.position.x = 2.2 * (mouse.x - gameWidth / 2);
+  screensContainer.position.y = 2.2 * (mouse.y - gameHeight / 2);
 }
 
 /**
