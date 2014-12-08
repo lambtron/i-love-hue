@@ -187,13 +187,18 @@ function detectCollisions() {
     // Screen equals obstacle.
     var sx = screensContainer.position.x;
     var sy = screensContainer.position.y;
-    for (var j = 0; j < screensContainer.children.length; j++) {
-      var screen = screensContainer.children[j];
-      if (sx === screen.position.x && sy === screen.position.y) {
-        for (var k = 0; k < obstacle.screens.length; k++) {
-          if (screen.color === obstacle.screens[k])
-            removeObstacle(i);
-        }
+    var screens = screensContainer.children[0].screens;
+    for (var j = 0; j < screens.length; j++) {
+      var screen = screens[j];
+      console.log(screen);
+      if (sx < screen.position.x + 10 &&
+          sx > screen.position.x - 10 &&
+          sy < screen.position.y + 10 &&
+          sy > screen.position.y - 10) {
+        console.log(obstacle.color);
+        console.log(screen.color);
+        if (screen.color === obstacle.color)
+          removeObstacle(i);
       }
     }
     // What is the screenContainer position?
@@ -238,7 +243,7 @@ function draw() {
   // Listen when key down movements.2
   var randomOccurance = Math.round(Math.random() * 100);
   if (randomOccurance < 1) {
-    var obstacle = new Obstacle(['0xFF0000'], gameWidth, obstaclesContainer); // needs to be one of the colors
+    var obstacle = new Obstacle('0xCCDDFF', gameWidth, obstaclesContainer); // needs to be one of the colors
     obstaclesArray.push(obstacle);
   }
   detectCollisions();
