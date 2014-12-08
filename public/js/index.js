@@ -55,7 +55,9 @@ function init() {
  */
 
 function setupPlayer() {
-  var player = new PIXI.Text('#', { font: '30px ariel', fill: 'white' });
+  var playerTexture = PIXI.Texture.fromImage('public/assets/img/player.png');
+  var player = new PIXI.Sprite(playerTexture);
+  // var player = new PIXI.Text('#', { font: '30px ariel', fill: 'white' });
   player.position.y = playerSettings.y;
   player.position.x = gameWidth / 2 - 10;
   return player;
