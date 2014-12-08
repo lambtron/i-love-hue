@@ -44,7 +44,7 @@ draw();
  */
 
 function init() {
-  var assetsToLoad = [];
+  var assetsToLoad = ['public/assets/img/player.png'];
   loader = new PIXI.AssetLoader(assetsToLoad);
   loader.onComplete = setup.bind(this);
   loader.load();
@@ -91,7 +91,7 @@ function setup() {
   obstaclesContainer = new PIXI.DisplayObjectContainer();
   screensContainer = new PIXI.DisplayObjectContainer();
   mainContainer = new PIXI.DisplayObjectContainer();
-  var screenGraphics = setupScreens([0x0000FF]);
+  var screenGraphics = setupScreens([0xCCDDFF]);
   screensContainer.addChild(screenGraphics[0]);
   mainContainer.addChild(screensContainer);
   mainContainer.addChild(obstaclesContainer);
